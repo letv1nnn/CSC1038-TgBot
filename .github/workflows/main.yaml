@@ -1,0 +1,22 @@
+name: bot ci
+
+on:
+  push:
+    paths:
+      - 'bot/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build
+        working-directory: bot
+        run: go build main.go buttons.go constants.go
