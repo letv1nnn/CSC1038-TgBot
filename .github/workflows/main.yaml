@@ -3,7 +3,7 @@ name: bot ci
 on:
   push:
     paths:
-      - './**'
+      - '**'
 
 jobs:
   build:
@@ -18,5 +18,4 @@ jobs:
           go-version: '1.21'
 
       - name: Build
-        working-directory: bot
-        run: go build main.go
+        run: go build -o csc1038bot main.go
