@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 const about string = `The bot will provide multiple solutions to a lab problem: one using basic syntax and another using advanced syntax. It will also explain some C programming topics covered in the lecture. Additionally, by using the provided button, the bot will return a list of resources for Computer Science.`
 const resources string = `
 	Computer Systems
@@ -51,3 +53,27 @@ const resources string = `
 
 	https://61600.csail.mit.edu/2023/
 `
+
+func escapeMarkdownV2(text string) string {
+	replacer := strings.NewReplacer(
+		"_", "\\_",
+		"*", "\\*",
+		"[", "\\[",
+		"]", "\\]",
+		"(", "\\(",
+		")", "\\)",
+		"~", "\\~",
+		"`", "\\`",
+		">", "\\>",
+		"#", "\\#",
+		"+", "\\+",
+		"-", "\\-",
+		"=", "\\=",
+		"|", "\\|",
+		"{", "\\{",
+		"}", "\\}",
+		".", "\\.",
+		"!", "\\!",
+	)
+	return replacer.Replace(text)
+}

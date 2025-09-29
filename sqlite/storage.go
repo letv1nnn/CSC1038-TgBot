@@ -15,6 +15,7 @@ type LabTask struct {
 	ID       int
 	TaskName string
 	Code     string
+	Expl     string
 }
 
 func New(path string) (*Storage, error) {
@@ -31,8 +32,9 @@ func New(path string) (*Storage, error) {
     CREATE TABLE IF NOT EXISTS labs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         task_name TEXT NOT NULL,
-        code TEXT NOT NULL
-    );`
+        code TEXT NOT NULL,
+		expl TEXT NOT NULL
+	);`
 
 	if _, err := db.Exec(schema); err != nil {
 		return nil, fmt.Errorf("could not create table: %w", err)
@@ -43,8 +45,8 @@ func New(path string) (*Storage, error) {
 
 func (s *Storage) Save(lab LabTask) error {
 	_, err := s.db.Exec(
-		"INSERT INTO labs (task_name, code) VALUES (?, ?)",
-		lab.TaskName, lab.Code,
+		"INSERT INTO labs (task_name, code, expl) VALUES (?, ?, ?)",
+		lab.TaskName, lab.Code, lab.Expl,
 	)
 	if err != nil {
 		return fmt.Errorf("could not insert lab: %w", err)
@@ -54,11 +56,11 @@ func (s *Storage) Save(lab LabTask) error {
 
 func (s *Storage) Get(task_name string) (*LabTask, error) {
 	row := s.db.QueryRow(
-		"SELECT id, task_name, code FROM labs WHERE task_name = ?",
+		"SELECT id, task_name, code, expl FROM labs WHERE task_name = ?",
 		task_name,
 	)
 	var lab LabTask
-	if err := row.Scan(&lab.ID, &lab.TaskName, &lab.Code); err != nil {
+	if err := row.Scan(&lab.ID, &lab.TaskName, &lab.Code, &lab.Expl); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}

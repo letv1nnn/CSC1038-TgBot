@@ -53,9 +53,18 @@ func main() {
 				}
 
 				if task != nil {
-					msg := tgbotapi.NewMessage(update.Message.Chat.ID, task.Code)
-					msg.ParseMode = "MarkdownV2"
-					bot.Send(msg)
+					expl := tgbotapi.NewMessage(update.Message.Chat.ID, "EXPLANATION\n"+task.Expl)
+
+					escapedCode := escapeMarkdownV2(taskName) + "\n```c\n" + escapeMarkdownV2(task.Code) + "\n```"
+					code := tgbotapi.NewMessage(update.Message.Chat.ID, escapedCode)
+					code.ParseMode = "MarkdownV2"
+
+					if _, err := bot.Send(code); err != nil {
+						log.Printf("failed to send code: %v", err)
+					}
+					if _, err := bot.Send(expl); err != nil {
+						log.Printf("failed to send explanation: %v", err)
+					}
 				}
 
 				labFlag = false
