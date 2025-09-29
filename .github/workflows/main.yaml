@@ -3,7 +3,7 @@ name: bot ci
 on:
   push:
     paths:
-      - 'bot/**'
+      - './**'
 
 jobs:
   build:
@@ -19,4 +19,4 @@ jobs:
 
       - name: Build
         working-directory: bot
-        run: go build main.go buttons.go constants.go
+        run: go build main.go
