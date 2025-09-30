@@ -6,10 +6,16 @@ LabBot is your personal Computer Science study assistant on Telegram! It helps s
 
 Only docker image available. In this week gonna deploy it on a local Kubernetes cluster.
 
-
 ### Build and Run Locally
 ```sh
 git clone https://github.com/letv1nnn/CSC1038-TgBot.git && cd CSC1038-TgBot
 docker build -t csc1038bot:latest .
 docker run --rm -it -e TOKEN="" csc1038bot:latest       # put telegram token in the placeholder
+```
+
+### Using Kubernetes
+I'm running it locally with minikube, you can use others like k3s or kind. 
+```sh
+minikube start --driver=docker
+kubectl apply -f deplyment.yaml # you need to specify TOKEN
 ```

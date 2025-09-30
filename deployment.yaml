@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: csc1038bot
+
+spec:
+  selector:
+    matchLabels:
+      bot: csc1038
+  
+  template:
+    metadata:
+      labels:
+        bot: csc1038
+    spec:
+      containers:
+        - name: tg
+          image: letv1nnn/csc1038bot
+          env:
+            - name: TOKEN
+              value: ""
